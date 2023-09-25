@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff&family=Work+Sans:wght@500&display=swap');
+body{
+    overflow: hidden;
+}
+.App{
+    min-height: 100vh;
+    display: flex;
+    /* background-image: url("./Images/layered-waves-haikei.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; */
+    background: #fccb90;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 126, 235, 1));
+    overflow: hidden;
+}
+.mask-custom {
+    background: rgba(24, 24, 16, .2) !important;
+    border-radius: 2em;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+    }
+    .mask-custom::-webkit-scrollbar{
+        width: 12px;
+    }
+    .mask-custom::-webkit-scrollbar-thumb{
+        background-color: rgb(243, 194, 255)    ;
+        border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar{
+        width: 12px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb{
+        background-color: rgb(243, 194, 255)    ;
+        border-radius: 10px;
+    }
+    
+#Girl{
+    animation: upDown;
+    position: relative;
+}
+@keyframes upDown {
+    0%{
+        top:0;
+    }
+    50%{
+        top:-50px
+    }
+    100%{
+        top:0;
+    }
+    
+}
