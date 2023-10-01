@@ -10,6 +10,7 @@ function App() {
       <Routes>
       <Route element={<HomePage/>} path='/'/>
       <Route element={<ChatPage/>} path='/chat'/>
+      {/* <Route element={<ChatPage/>} path='/chat/:id'/> */}
       </Routes>
     </div>
   );

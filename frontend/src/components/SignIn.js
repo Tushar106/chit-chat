@@ -46,7 +46,7 @@ function SignIn(){
             try {
                 setLoading(true)
                 const response=await axios.post("/api/user/login",body)
-                localStorage.setItem("user",JSON.stringify(response))
+                localStorage.setItem("user",JSON.stringify(response.data))
                 setLoading(false)
                 navigate("/chat")
             } catch (error) {

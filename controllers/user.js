@@ -144,7 +144,6 @@ const login = asyncHandler(async (req, res) => {
 })
 // /api/user?search=tushar
 const getAllUser = async (req, res) => {
-    console.log("here")
     const keyword = req.query.search ? {
         $or: [
             { name: { $regex: req.query.search, $options: "i" } },

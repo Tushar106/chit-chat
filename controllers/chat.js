@@ -2,7 +2,7 @@ const expressAsyncHandler = require("express-async-handler");
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 
-const accessChat = expressAsyncHandler(async (req, res) => {
+const accessChat = expressAsyncHandler(async (req, res) => {    
     const { userId } = req.body;
 
     if (!userId) {
@@ -72,7 +72,7 @@ const createGroupChat=expressAsyncHandler(async(req,res)=>{
             chatname:req.body.name,
             users:users,
             isGroupChat:true,
-            groupAdmin:req.user.id
+            groupAdmin:req.user.id,
         });
         await groupChat.save();   
             const fullGroupChat=await Chat.findOne({_id:groupChat._id}).populate("users","-password").populate("groupAdmin","-password")

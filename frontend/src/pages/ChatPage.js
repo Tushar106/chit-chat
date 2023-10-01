@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios"
+import React, { useState } from "react";
+
 import { ChatState } from "../Context/ChatProvider";
 import ChatNavbar from "../components/ChatNavbar";
 import ChatBody from "../components/ChatBody";
+// import { useParams } from 'react-router-dom';
 function ChatPage() {
-    const [data, setData] = useState();
-    const { user } = ChatState();
-    useEffect(() => {
-        console.log(user)
-    }, [])
-
+    const { user } = ChatState()
+    
 
     return (
-       <div className="container-fluid p-0">
-        <ChatNavbar/>
-        <ChatBody/>
-       </div>
+        <div className="container-fluid p-0">
+            {user && <>
+                <ChatNavbar />
+                <ChatBody/>
+            </>}
+
+        </div>
     )
 }
 export default ChatPage

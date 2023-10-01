@@ -1,57 +1,94 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useParams } from 'react-router-dom';
+import axios from "axios";
+import { ChatState } from "../Context/ChatProvider";
+
 function ChatContent() {
     const divRef = useRef(null);
+    const {selectedChat,user}=ChatState();
+    function getSender(loggein, users) {
+        return users[0]._id == loggein._id ? users[1]: users[0]
+    }
 
-    // Function to scroll the div to the bottom
     const scrollToBottom = () => {
         if (divRef.current) {
             divRef.current.scrollTop = divRef.current.scrollHeight;
         }
     };
-    useEffect(() => {
-        scrollToBottom();
-    }, []);
+    // useEffect(() => {
+    //     setLoading(true)
+    //     const fn = async () => {
+    //         try {
+    //             const data = await axios.post(`/api/chat`,
+    //                 {
+    //                     "userId": id
+    //                 }
+    //             )
+    //             await setChat(data.data)
+    //             console.log(data.data)
+    //             await setLoading(false)
+    //         } catch (error) { console.log("Error", error) }
+    //     }; 
+    //     fn();
+    //     scrollToBottom();
+    // }, []);
     return (
         <>
-            <div className="col-lg-9 p-2 h-100">
-                <div className="container rounded h-100 mask-custom   p-2">
-                    <div class="pt-3 pe-3 custom-scroll" ref={divRef}
-                        style={{ height: "85%", overflowY: "auto", boxSizing: "border-box" }} >
-                        <div class="d-flex flex-row justify-content-start">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                                alt="avatar 1" style={{ width: "45px", height: "100%" }} />
-                            <div style={{width:"60%"}}>
-                                <p class="small p-2 ms-3 mb-1 rounded-3" style={{backgroundColor: "#f5f6f7"}}>Lorem ipsum
-                                    dolor
-                                    sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                    dolore
-                                    magna aliqua.</p>
-                                <p class="small ms-3 mb-3 rounded-3 text-muted float-end">12:00 PM | Aug 13</p>
-                            </div>
-                        </div>
+            <div className="col-lg-9 p-2 h-100 chat-content">
+                <div className="container rounded h-100  mask-custom p-2"  >
+                   {selectedChat? <>
+                    <div className="card-header d-flex justify-content-start align-items-center p-3" style={{ height: "10%", borderBottom: "1px solid" }}>
+                        <img src={!selectedChat.isGroupChat  
+                                ? getSender(user, selectedChat.users).picture
+                                : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"}
+                            alt="avatar 1" style={{ width: "45px", marginRight: "20px" }} />
 
-                        <div class="d-flex flex-row justify-content-end">
-                            <div style={{width:"60%"}}>
-                                <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Ut enim ad minim veniam,
-                                    quis
-                                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem100 jhvjhuidsuhfjsdhfjdshfkjsfjbdskjkjgfjndf gmdabjkf  fkbsa  fkansbfha fnsdafbfsn ab</p>
-                                <p class="small me-3 mb-3 rounded-3 text-muted">12:00 PM | Aug 13</p> 
+                        <h5 className="mb-0">
+                            {!selectedChat.isGroupChat  
+                                ? getSender(user, selectedChat.users).name
+                                : selectedChat.chatname}
+                        </h5>
+                    </div>
+                    <div className="container-fluid" style={{ height: "90%" }}>
+                        <div className="pt-3 pe-3 custom-scroll" ref={divRef}
+                            style={{ height: "85%", overflowY: "auto", boxSizing: "border-box" }} >
+                            <div className="d-flex flex-row justify-content-start">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                    alt="avatar 1" style={{ width: "45px", height: "100%" }} />
+                                <div style={{ width: "60%" }}>
+                                    <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>Lorem ipsum
+                                        dolor
+                                        sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                        dolore
+                                        magna aliqua.</p>
+                                    <p className="small ms-3 mb-3 rounded-3 text-muted float-end">12:00 PM | Aug 13</p>
+                                </div>
                             </div>
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                alt="avatar 1" style={{ width: "45px", height: "100%" }} />
+
+                            <div className="d-flex flex-row justify-content-end">
+                                <div style={{ width: "60%" }}>
+                                    <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Ut enim ad minim veniam,
+                                        quis
+                                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem100 jhvjhuidsuhfjsdhfjdshfkjsfjbdskjkjgfjndf gmdabjkf  fkbsa  fkansbfha fnsdafbfsn ab</p>
+                                    <p className="small me-3 mb-3 rounded-3 text-muted">12:00 PM | Aug 13</p>
+                                </div>
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                    alt="avatar 1" style={{ width: "45px", height: "100%" }} />
+                            </div>
+                        </div>
+                        <div className="text-muted d-flex justify-content-start align-items-center p-2" style={{ height: "15%" }}>
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                alt="avatar 3" style={{ width: "40px", marginRight: "10px" }} />
+                            <input type="text" className="form-control form-control-lg" id="exampleFormControlInput2"
+                                placeholder="Type message" style={{ height: "80%" }} />
+                            <a className="btn" href="#!" style={{ marginLeft: "10px" }}>
+                                <FontAwesomeIcon icon={faPaperPlane} size="2x" />
+                            </a>
                         </div>
                     </div>
-                    <div class="text-muted d-flex justify-content-start align-items-center p-2" style={{ height: "15%" }}>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                            alt="avatar 3" style={{ width: "40px", marginRight: "10px" }} />
-                        <input type="text" className="form-control form-control-lg" id="exampleFormControlInput2"
-                            placeholder="Type message" style={{ height: "80%" }} />
-                        <a className="btn" href="#!" style={{ marginLeft: "10px" }}>
-                            <FontAwesomeIcon icon={faPaperPlane} size="2x" />
-                        </a>
-                    </div>
+                    </>:<div>loading</div>}
                 </div>
             </div>
         </>
