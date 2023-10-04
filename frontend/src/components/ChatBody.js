@@ -1,12 +1,24 @@
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ChatList from "./ChatList";
 import ChatContent from "./ChatContent";
 import { useParams } from 'react-router-dom';
 import { ChatState } from "../Context/ChatProvider";
 
 function ChatBody() {
-    const {selectedChat}=ChatState();
+    const { selectedChat } = ChatState();
+    const [fetchChat, setfetchChat] = useState(false);
+    const [width, setWidth] = useState(window.innerWidth);
+    const breakPoint = 1000;
+
+
+
+    useEffect(() => {
+        const handleWindowResize = () => setWidth(window.innerWidth);
+        window.addEventListener("resize", handleWindowResize);
+        
+        return () => window.removeEventListener("resize", handleWindowResize);
+    }, []);
     return (
         <div className="chat-body" style={{
             width: "100%",
@@ -15,8 +27,9 @@ function ChatBody() {
         }}>
             <div className="container-fluid h-100" >
                 <div className="row h-100" >
-                    <ChatList />
-                    {selectedChat&& <ChatContent />}
+                    {!selectedChat && width<breakPoint && <ChatList fetchChat={fetchChat} />}
+                    {width>breakPoint && <ChatList fetchChat={fetchChat}/> }
+                    {selectedChat && <ChatContent fetchChat={fetchChat} setfetchChat={setfetchChat} />}
                 </div>
             </div >
         </div >

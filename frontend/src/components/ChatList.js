@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import axios from "axios";
 import AddGroup from "./AddGroup";
-function ChatList() {
+function ChatList({fetchChat}) {
     const { user, chatList, setChatList, selectedChat, setSelectedChat } = ChatState();
     const [loading, setLoading] = useState(false)
     function getSender(loggein, users) {
@@ -24,11 +24,11 @@ function ChatList() {
             }
         }
         fetchData();
-    }, [])
+    }, [fetchChat])
 
     return (
         <>
-            <div className="col-lg-3 p-2 h-100 ">
+            <div className="col-lg-3 p-2 h-100 " >
                 <div className="d-flex justify-content-between " style={{ height: "10%", alignItems: "center" }}>
                     <div><h5 className="font-weight-bold text-center m-0 text-white" >Member</h5></div>
                     <a className="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="#offcanvasExample" role="button" >

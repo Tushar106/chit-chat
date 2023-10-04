@@ -6,7 +6,6 @@ import ChatBody from "../components/ChatBody";
 // import { useParams } from 'react-router-dom';
 function ChatPage() {
     const { user } = ChatState()
-    
 
     return (
         <div className="container-fluid p-0">

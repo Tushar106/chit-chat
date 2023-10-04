@@ -102,11 +102,11 @@ background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 1
     flex-direction: row;
     justify-content: space-between;
 }
-@media screen and (max-width: 990px) {
+/* @media screen and (max-width: 990px) {
     .chat-content{
         display: none;
     }
-}
+} */
 .contact-hover:hover{
     backdrop-filter: blur(6px) saturate(180%);
     -webkit-backdrop-filter: blur(6px) saturate(180%);

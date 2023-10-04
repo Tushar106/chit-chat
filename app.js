@@ -6,6 +6,8 @@ const { chats } = require("./data/data");
 const { default: mongoose } = require("mongoose");
 const userRoute =require('./routes/userRoute');
 const chatRoute =require('./routes/chatRoute');
+const messageRoute =require('./routes/messageRoute');
+
 
 var cookieParser = require('cookie-parser');
 const { notFound, errorHandler } = require("./middleware/errorMiddleWare");
@@ -43,6 +45,8 @@ app.get("/",(req,res)=>{
 
 app.use("/api/user",userRoute);
 app.use("/api/chat",chatRoute);
+app.use("/api/message",messageRoute);
+
 
 
 app.use(notFound)
@@ -50,18 +54,9 @@ app.use(errorHandler);
 
 
 
-// app.get("/api/chats",(req,res)=>{
-//     res.send(chats)
-// })
-// app.get("/api/chats/:id",(req,res)=>{
-//     console.log(req.params.id)
-//     const singleChat=chats.find((c)=>c._id==req.params.id
-//     )
-//     res.send(singleChat)
-// })
 
 
 app.listen(port,()=>{
-    connect();
     console.log(`Server Started at port ${port}`)
+    connect();
 })

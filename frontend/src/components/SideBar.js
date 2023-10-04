@@ -44,7 +44,7 @@ function SideBar() {
           if (!chatList.find((c) => c._id === data._id)) setChatList([data, ...chatList]);
           setSelectedChat(data);
           setChatLoading(false);
-          document.getElementById("close-btn").click();
+          document.getElementById("close-btn1").click();
         } catch (error) {
           console.log(error)
         }
@@ -57,7 +57,7 @@ function SideBar() {
             }}>
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title" id="offcanvasExampleLabel">Search for Users</h5>
-                    <button type="button" className="btn-close" id="close-btn" data-bs-dismiss="offcanvas"   aria-label="Close"></button>
+                    <button type="button" className="btn-close " id="close-btn1" data-bs-dismiss="offcanvas"   aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body">
                     <div className="input-group   rounded mb-3">
@@ -66,14 +66,13 @@ function SideBar() {
                                 setResult([])
                                 setSearch(e.target.value)
                             }} />
-                        {/* <label for="floatingInput">Email address</label> */}
                         <button className="btn bg-white border-0" id="search-addon" disabled={search===""?true:false}   onClick={submit} >
                             <FontAwesomeIcon icon={faSearch} />
                         </button>
                     </div>
                     <hr></hr>
                     <div className="m-2 custom-scroll overflow-y-scroll">
-                        {!loading && !chatLoading ?<ul className="list-unstyled components pl-lg-4 pr-lg-4">
+                        {!loading ?<ul className="list-unstyled components pl-lg-4 pr-lg-4">
                             {result.length>0 ?<>
                                {result.map((item, index) => {
                                 return (

@@ -2,7 +2,7 @@ const expressAsyncHandler = require("express-async-handler");
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 
-const accessChat = expressAsyncHandler(async (req, res) => {    
+const accessChat = expressAsyncHandler(async (req, res) => {
     const { userId } = req.body;
 
     if (!userId) {
@@ -12,7 +12,7 @@ const accessChat = expressAsyncHandler(async (req, res) => {
     var isChat = await Chat.find({
         isGroupChat: false,
         $and: [{ users: { $elemMatch: { $eq: req.user.id } } },
-        { users: { $elemMatch: { $eq:userId } } }]
+        { users: { $elemMatch: { $eq: userId } } }]
     }).populate("users", "-password").populate("latestMessage")
 
     isChat = await User.populate(isChat, {
@@ -27,10 +27,10 @@ const accessChat = expressAsyncHandler(async (req, res) => {
             const newChat = new Chat({
                 chatname: "sender",
                 isGroupChat: false,
-                users: [req.user.id,userId]
+                users: [req.user.id, userId]
             })
-            await newChat.save();   
-            const FullChat=await Chat.findOne({_id:newChat._id}).populate("users","-password")
+            await newChat.save();
+            const FullChat = await Chat.findOne({ _id: newChat._id }).populate("users", "-password")
             res.status(200).json(FullChat)
         } catch (error) {
             throw new Error(error.message)
@@ -38,9 +38,9 @@ const accessChat = expressAsyncHandler(async (req, res) => {
     }
 })
 
-const fetchChat=expressAsyncHandler(async(req,res)=>{
+const fetchChat = expressAsyncHandler(async (req, res) => {
     try {
-        Chat.find({users:{$elemMatch:{$eq:req.user.id}}}).populate("users","-password").populate("groupAdmin","-password").populate("latestMessage").sort({updatedAt:-1}).then(async(results)=>{
+        Chat.find({ users: { $elemMatch: { $eq: req.user.id } } }).populate("users", "-password").populate("groupAdmin", "-password").populate("latestMessage").sort({ updatedAt: -1 }).then(async (results) => {
             results = await User.populate(results, {
                 path: "latesMessage.sender",
                 select: "name pic email"
@@ -52,15 +52,15 @@ const fetchChat=expressAsyncHandler(async(req,res)=>{
         throw new Error(error.message)
     }
 })
-const createGroupChat=expressAsyncHandler(async(req,res)=>{
-    if(!req.body.users || !req.body.name){
-         res.status(400)
-         throw new Error("Enter the fields")
+const createGroupChat = expressAsyncHandler(async (req, res) => {
+    if (!req.body.users || !req.body.name) {
+        res.status(400)
+        throw new Error("Enter the fields")
     }
 
-    var users=req.body.users;
+    var users = req.body.users;
 
-    if(users.length<2){
+    if (users.length < 2) {
         res.status(400)
         throw new Error("More than 2 users are required")
     }
@@ -68,113 +68,138 @@ const createGroupChat=expressAsyncHandler(async(req,res)=>{
     users.push(req.user.id);
 
     try {
-        const groupChat=await new Chat({
-            chatname:req.body.name,
-            users:users,
-            isGroupChat:true,
-            groupAdmin:req.user.id,
+        const groupChat = await new Chat({
+            chatname: req.body.name,
+            users: users,
+            isGroupChat: true,
+            groupAdmin: req.user.id,
         });
-        await groupChat.save();   
-            const fullGroupChat=await Chat.findOne({_id:groupChat._id}).populate("users","-password").populate("groupAdmin","-password")
-            res.status(200).json(fullGroupChat)
-        
+        await groupChat.save();
+        const fullGroupChat = await Chat.findOne({ _id: groupChat._id }).populate("users", "-password").populate("groupAdmin", "-password")
+        res.status(200).json(fullGroupChat)
+
     } catch (error) {
         res.status(400)
         throw new Error(error.message)
-        
+
     }
 })
 
-const renameGroup=expressAsyncHandler(async(req,res)=>{
-    const{chatId,newName}=req.body;
-    if (!chatId||!newName ){
+const renameGroup = expressAsyncHandler(async (req, res) => {
+    const { chatId, newName } = req.body;
+    if (!chatId || !newName) {
         res.status(400)
         throw new Error("Enter the fields")
     }
-    try{
-        var chat=await Chat.findByIdAndUpdate(chatId,{chatname:newName},{new:true}).populate("users","-password").populate("groupAdmin","-password")
-        if(!chat){
+    try {
+        var chat = await Chat.findByIdAndUpdate(chatId, { chatname: newName }, { new: true }).populate("users", "-password").populate("groupAdmin", "-password")
+        if (!chat) {
             res.status(400)
-        throw new Error("Chat not found")
+            throw new Error("Chat not found")
         }
-        else{
+        else {
             res.status(200).json(chat);
         }
     }
-    catch(err){
+    catch (err) {
         res.status(400)
         throw new Error(err.message)
     }
 
 })
 
-const addToGroup=expressAsyncHandler(async(req,res)=>{
-    try{
-        const {userId,chatId}=req.body;
+const addToGroup = expressAsyncHandler(async (req, res) => {
+    try {
+        const { userId, chatId } = req.body;
 
-        const chat=await Chat.find({
-            _id:chatId,
-            isGroupChat:true,
-            users: { $elemMatch: { $eq:userId } } 
+        const chat = await Chat.find({
+            _id: chatId,
+            isGroupChat: true,
+            users: { $elemMatch: { $eq: userId } }
         })
-        if(chat.length>0){
+        if (chat.length > 0) {
             res.status(200)
             const error = new Error("User already Exist")
             error.status = 200;
             throw error
         }
-        const added=await Chat.findByIdAndUpdate(chatId,{
-            $push:{users:userId},
-        },{new:true}).populate("users","-password").populate("groupAdmin","-password")
+        const added = await Chat.findByIdAndUpdate(chatId, {
+            $push: { users: userId },
+        }, { new: true }).populate("users", "-password").populate("groupAdmin", "-password")
 
-        if(!added){
+        if (!added) {
             res.status(400);
             throw new Error("Chat not Found")
         }
-        else{
+        else {
             res.status(200).json(added)
         }
     }
-    catch(err){
+    catch (err) {
         const error = new Error(err.message)
         error.status = err.status;
         throw error
     }
 })
-const removeFromGroup=expressAsyncHandler(async(req,res)=>{
-    try{
-        const {userId,chatId}=req.body;
+const removeFromGroup = expressAsyncHandler(async (req, res) => {
+    try {
+        const { userId, chatId } = req.body;
 
-        const chat=await Chat.find({
-            _id:chatId,
-            isGroupChat:true,
-            users: { $elemMatch: { $eq:userId } } 
+        const chat = await Chat.find({
+            _id: chatId,
+            isGroupChat: true,
+            users: { $elemMatch: { $eq: userId } }
         })
-        if(chat.length===0){
+        if (chat.length === 0) {
             res.status(200)
             const error = new Error("User don't Exist")
             error.status = 200;
             throw error
         }
-        const removed=await Chat.findByIdAndUpdate(chatId,{
-            $pull:{users:userId},
-        },{new:true}).populate("users","-password").populate("groupAdmin","-password")
+        const removed = await Chat.findByIdAndUpdate(chatId, {
+            $pull: { users: userId },
+        }, { new: true }).populate("users", "-password").populate("groupAdmin", "-password")
 
-        if(!removed){
+        if (!removed) {
             res.status(400);
             throw new Error("Chat not Found")
         }
-        else{
+        else {
             res.status(200).json(removed)
         }
     }
-    catch(err){
+    catch (err) {
         const error = new Error(err.message)
         error.status = err.status;
         throw error
     }
 })
+
+const updateGroup = expressAsyncHandler(async (req, res) => {
+    const { chatId, users } = req.body;
+    if (users.length < 2) {
+        res.status(400)
+        throw new Error("More than 2 users are required")
+    }
+    try {
+        var chat = await Chat.findByIdAndUpdate(chatId, { users: users }, { new: true }).populate("users", "-password").populate("groupAdmin", "-password")
+        if (!chat) {
+            res.status(400)
+            throw new Error("Chat not found")
+        }
+        else {
+            res.status(200).json(chat);
+        }
+    } catch (err) {
+        const error = new Error(err.message)
+        error.status = err.status;
+        throw error
+    }
+})
+
+
+
 // populate ka kaam jo data object hai oski jagh pura data aa jaye jo actual hai
 
-module.exports={accessChat,fetchChat,createGroupChat,renameGroup,addToGroup,removeFromGroup}
+module.exports = { accessChat, fetchChat, createGroupChat, renameGroup, addToGroup, removeFromGroup, updateGroup }
 
