@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 var jwt = require('jsonwebtoken');
 const saltRounds = 10;
 const register = asyncHandler(async (req, res) => {
-    const { name, email, password, pic } = req.body;
+    const { name, email, password, picture } = req.body;
     if (!name || !email || !password) {
         res.status(400)
         const error = new Error("Please Enter all the Fields")
@@ -108,7 +108,8 @@ const register = asyncHandler(async (req, res) => {
     const newUser = new User({
         name: name,
         email: email,
-        password: hash
+        password: hash,
+        picture:picture
     })
     await newUser.save();
     var token = jwt.sign({ id: newUser._id }, process.env.JWT);

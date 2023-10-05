@@ -5,13 +5,29 @@ import { ChatState } from "../Context/ChatProvider";
 import axios from "axios";
 import AddGroup from "./AddGroup";
 function ChatList({fetchChat}) {
+    
     const { user, chatList, setChatList, selectedChat, setSelectedChat } = ChatState();
     const [loading, setLoading] = useState(false)
     function getSender(loggein, users) {
         return users[0]._id == user._id ? users[1] : users[0]
     }
 
+    const date = (d) => {
+        const date = new Date(d);
 
+        // Formatting the time in 12-hour clock format (e.g., 12:00 PM)
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const time12Hour = `${hours % 12 || 12}:${minutes < 10 ? "0" : ""}${minutes} ${hours < 12 ? "AM" : "PM"}`;
+
+        // Formatting the date (e.g., Aug 13)
+        const options = { month: "short", day: "numeric" };
+        const formattedDate = date.toLocaleDateString(undefined, options);
+
+        // Combine the time and date formats
+        const result = `${time12Hour} | ${formattedDate}`;
+        return result;
+    }
     useEffect(() => {
         setLoading(true)
         const fetchData = async () => {
@@ -25,6 +41,8 @@ function ChatList({fetchChat}) {
         }
         fetchData();
     }, [fetchChat])
+    
+   
 
     return (
         <>
@@ -57,8 +75,7 @@ function ChatList({fetchChat}) {
                                                         </p>
                                                         {chat.latestMessage && (
                                                             <p className="small text-white">
-                                                                {chat.latestMessage.sender.name} :
-                                                                {chat.latestMessage.content.length > 50
+                                                                {chat.latestMessage.sender.name} : {chat.latestMessage.content.length > 50
                                                                     ? chat.latestMessage.content.substring(0, 51) + "..."
                                                                     : chat.latestMessage.content}
                                                             </p>
@@ -66,8 +83,8 @@ function ChatList({fetchChat}) {
                                                     </div>
                                                 </div>
                                                 <div className="pt-1">
-                                                    <p className="small text-white mb-1">Just now</p>
-                                                    <span className="badge bg-danger rounded-pill float-end">1</span>
+                                                    {chat.latestMessage&&<p className="small text-white mb-1">{date(chat.latestMessage.createdAt)}</p>}
+                                                    {/* <span className="badge bg-danger rounded-pill float-end">1</span> */}
                                                 </div>
                                             </a>
                                         </li>)

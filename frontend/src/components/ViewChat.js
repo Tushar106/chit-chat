@@ -126,13 +126,13 @@ function ViewChat({fetchChat,setfetchChat}) {
                                         })}
                                     </ul>}
                             </div>
-                            {!updateLoading ? <div class="input-group mb-3">
+                            {!updateLoading ? <div className="input-group mb-3">
                                 <input type="email" className="form-control " id="floatingInput" placeholder="New Group Name" onChange={(e) => {
                                     setGroupName(e.target.value)
                                 }} />
                                 <button className="btn btn-outline-success" type="button" id="button-addon2" disabled={groupName === "" ? true : false} onClick={renameGroup}>Update</button>
                             </div> : <div>loading</div>}
-                            <div class="input-group mb-3">
+                            <div className="input-group mb-3">
                                 <input type="email" className="form-control " id="floatingInput" value={search} placeholder="Search" onChange={(e) => {
                                     setResult([])
                                     setSearch(e.target.value)

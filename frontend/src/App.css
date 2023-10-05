@@ -121,3 +121,8 @@ background: linear-gradient(to bottom right, rgba(252, 203, 144, 1), rgba(213, 1
     border-radius: 12px;
     border: 1px solid rgba(209, 213, 219, 0.3);
 }
+.styles_scrollable-div__prSCv{
+    height: 83%!important;
+    overflow-y: auto;
+    boxSizing: border-box;
+}
