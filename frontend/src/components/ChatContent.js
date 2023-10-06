@@ -21,7 +21,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
     const [isTyping, setIsTyping] = useState(false);
     const [userTyping,setUserTyping]=useState("");
 
-    const { selectedChat, user, setSelectedChat } = ChatState();
+    const { selectedChat, user, setSelectedChat,notification, setNotification } = ChatState();
     function getSender(loggein, users) {
         return users[0]._id == loggein._id ? users[1] : users[0]
     }
@@ -56,7 +56,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                 content: messageText,
                 chatId: selectedChat._id
             })
-            // setfetchChat(!fetchChat)
+            setfetchChat(!fetchChat)
             socket.emit("new message", data)
             setMessages([...messages, data])
         } catch (error) {
@@ -121,15 +121,29 @@ function ChatContent({ fetchChat, setfetchChat }) {
         window.addEventListener("resize", handleWindowResize);
         fetchMessage();
         // scrollToBottom();
-
+        updateStateWithoutKey(selectedChat._id)
         selectedChatCompare = selectedChat;
         return () => window.removeEventListener("resize", handleWindowResize);
     }, [selectedChat]);
 
+    const updateStateWithoutKey = (id) => {
+        // Create a copy of the current state
+        const newState = { ...notification };
+        // console.log(notification[id])
+    
+        // Omit the key you want to remove
+        delete newState[id] ;
+       
+        setNotification(newState);
+      };
+
     useEffect(() => {
         socket.on("message recieved", (newMessageRecieved) => {
+            // console.log(newMessageRecieved)
+            setfetchChat(!fetchChat)
             if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
-                //give notification 
+                // //give notification 
+                // console.log("hello")
             }
             else {
                 setMessages([...messages, newMessageRecieved]);

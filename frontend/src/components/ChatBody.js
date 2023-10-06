@@ -28,7 +28,7 @@ function ChatBody() {
             <div className="container-fluid h-100" >
                 <div className="row h-100" >
                     {!selectedChat && width<breakPoint && <ChatList fetchChat={fetchChat} />}
-                    {width>breakPoint && <ChatList fetchChat={fetchChat}/> }
+                    {width>breakPoint && <ChatList fetchChat={fetchChat} setfetchChat={setfetchChat}/> }
                     {selectedChat && <ChatContent fetchChat={fetchChat} setfetchChat={setfetchChat} />}
                 </div>
             </div >

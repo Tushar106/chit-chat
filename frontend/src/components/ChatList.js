@@ -4,9 +4,14 @@ import React, { useEffect, useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import axios from "axios";
 import AddGroup from "./AddGroup";
-function ChatList({fetchChat}) {
+import io from "socket.io-client";
+
+var socket, selectedChatCompare;
+const ENDURL = "http://localhost:8800"
+function ChatList({fetchChat,setfetchChat}) {
+    const [socketConnected, setSocketConnected] = useState(false);
     
-    const { user, chatList, setChatList, selectedChat, setSelectedChat } = ChatState();
+    const { user, chatList, setChatList, selectedChat, setSelectedChat ,notification, setNotification , } = ChatState();
     const [loading, setLoading] = useState(false)
     function getSender(loggein, users) {
         return users[0]._id == user._id ? users[1] : users[0]
@@ -41,6 +46,28 @@ function ChatList({fetchChat}) {
         }
         fetchData();
     }, [fetchChat])
+
+    useEffect(() => {
+        socket = io(ENDURL);
+        socket.emit("setup", user)
+        socket.on('connected', () => {
+            setSocketConnected(true)
+        })
+    }, [])
+
+    useEffect(() => {
+        socket.on("message recieved", (newMessageRecieved) => {
+            setfetchChat(!fetchChat)
+            if (!selectedChat || selectedChat._id !== newMessageRecieved.chat._id) {
+                setNotification(prev=>{
+                    return{
+                        ...prev,
+                        [newMessageRecieved.chat._id]: notification[newMessageRecieved.chat._id]?notification[newMessageRecieved.chat._id]+1:1,
+                    }
+                });
+            }
+        })
+    })
     
    
 
@@ -84,7 +111,7 @@ function ChatList({fetchChat}) {
                                                 </div>
                                                 <div className="pt-1">
                                                     {chat.latestMessage&&<p className="small text-white mb-1">{date(chat.latestMessage.createdAt)}</p>}
-                                                    {/* <span className="badge bg-danger rounded-pill float-end">1</span> */}
+                                                    {notification[chat._id]&&<span className="badge bg-danger rounded-pill float-end">{notification[chat._id]}</span>}
                                                 </div>
                                             </a>
                                         </li>)
