@@ -2,7 +2,6 @@ require("dotenv").config();
 const express=require("express")
 const bodyParser=require("body-parser");
 const cors=require('cors')
-const { chats } = require("./server/data/data");
 const { default: mongoose } = require("mongoose");
 const userRoute =require('./routes/userRoute');
 const chatRoute =require('./routes/chatRoute');
