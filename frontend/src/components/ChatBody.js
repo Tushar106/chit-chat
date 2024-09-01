@@ -10,9 +10,6 @@ function ChatBody() {
     const [fetchChat, setfetchChat] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
     const breakPoint = 1000;
-
-
-
     useEffect(() => {
         const handleWindowResize = () => setWidth(window.innerWidth);
         window.addEventListener("resize", handleWindowResize);

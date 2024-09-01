@@ -167,7 +167,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                                 <img src={!selectedChat.isGroupChat
                                     ? getSender(user, selectedChat.users).picture
                                     : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"}
-                                    alt="avatar 1" style={{ width: "45px", marginRight: "20px" }} />
+                                    alt="avatar 1" style={{ width: "45px", marginRight: "20px", borderRadius:"100%" }} />
 
                                 <h5 className="mb-0 text-truncate" style={{ maxWidth: "150px" }}>
                                     {!selectedChat.isGroupChat
@@ -189,8 +189,8 @@ function ChatContent({ fetchChat, setfetchChat }) {
                                         ?
                                         <div className="d-flex flex-row justify-content-start" key={message._id}>
                                             <img src={message.sender.picture}
-                                                alt="avatar 1" style={{ width: "45px", height: "100%" }} />
-                                            <div style={{ width: "60%" }}>
+                                                alt="avatar 1" style={{ width: "45px", height: "100%",borderRadius:"100%" }} />
+                                            <div style={{ padding:"15px" }}>
                                                 <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
                                                     {message.content}.</p>
                                                 <p className="small ms-3 mb-3 rounded-3 text-muted float-end">{date(message.createdAt
@@ -198,7 +198,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                                             </div>
                                         </div> :
                                         <div className="d-flex flex-row justify-content-end" key={message._id}>
-                                            <div style={{ width: "60%" }}>
+                                            <div style={{ padding:"15px"}}>
                                                 <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
                                                     {message.content}
                                                 </p>
@@ -211,7 +211,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                                 </>)
                             }) : <div>loading</div>}
                         </ScrollableFeed>
-                        {isTyping?<div className="" style={{height:"2%"}}>{userTyping} is typing...</div>:<div></div>}
+                        {isTyping?<div className="" style={{height:"2%",marginBottom:"5px"}}>{userTyping} is typing...</div>:<div></div>}
                         <div className="text-muted d-flex justify-content-start align-items-center p-2" style={{ height: "15%" }}>
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
                                 alt="avatar 3" style={{ width: "40px", marginRight: "10px" }} />

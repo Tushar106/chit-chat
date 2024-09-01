@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-
 import { useNavigate } from "react-router-dom";
 import { ChatState } from "../Context/ChatProvider";
 
@@ -21,14 +18,14 @@ function Profile() {
     return (<div className="profile">
         <div id="profileContainer">
             <button className="btn" onClick={() => setopen(!open)} >
-            <img src={user.picture}
+            <img src={user.picture} alt={user.name}
                             className="img" style={{width:"32px" , height:"32px"}}/>
                 {/* <FontAwesomeIcon icon={faUserCircle} size={"2x"} /> */}
                 </button>
             {open && <div className="profileContainer">
                 <div className="profileContent">
                     <div className="img">
-                        <img src={user.picture}
+                        <img src={user.picture} alt={user.name}
                             className="rounded-circle img-fluid" />
                     </div>
                     <div className="profileInfo">

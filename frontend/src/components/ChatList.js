@@ -6,14 +6,15 @@ import axios from "axios";
 import AddGroup from "./AddGroup";
 import io from "socket.io-client";
 
-var socket, selectedChatCompare;
+var socket;
 const ENDURL = "http://localhost:8800"
-function ChatList({fetchChat,setfetchChat}) {
+function ChatList({ fetchChat, setfetchChat }) {
     const [socketConnected, setSocketConnected] = useState(false);
-    
-    const { user, chatList, setChatList, selectedChat, setSelectedChat ,notification, setNotification , } = ChatState();
+
+    const { user, chatList, setChatList, selectedChat, setSelectedChat, notification, setNotification, } = ChatState();
     const [loading, setLoading] = useState(false)
     function getSender(loggein, users) {
+        console.log(loggein)
         return users[0]._id == user._id ? users[1] : users[0]
     }
 
@@ -38,6 +39,7 @@ function ChatList({fetchChat,setfetchChat}) {
         const fetchData = async () => {
             try {
                 const { data } = await axios.get("/api/chat");
+                console.log(data)
                 await setChatList(data);
                 await setLoading(false)
             } catch (error) {
@@ -59,17 +61,17 @@ function ChatList({fetchChat,setfetchChat}) {
         socket.on("message recieved", (newMessageRecieved) => {
             setfetchChat(!fetchChat)
             if (!selectedChat || selectedChat._id !== newMessageRecieved.chat._id) {
-                setNotification(prev=>{
-                    return{
+                setNotification(prev => {
+                    return {
                         ...prev,
-                        [newMessageRecieved.chat._id]: notification[newMessageRecieved.chat._id]?notification[newMessageRecieved.chat._id]+1:1,
+                        [newMessageRecieved.chat._id]: notification[newMessageRecieved.chat._id] ? notification[newMessageRecieved.chat._id] + 1 : 1,
                     }
                 });
             }
         })
     })
-    
-   
+
+
 
     return (
         <>
@@ -77,47 +79,48 @@ function ChatList({fetchChat,setfetchChat}) {
                 <div className="d-flex justify-content-between " style={{ height: "10%", alignItems: "center" }}>
                     <div><h5 className="font-weight-bold text-center m-0 text-white" >Member</h5></div>
                     <a className="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="#offcanvasExample" role="button" >
-                            New Group <FontAwesomeIcon icon={faAdd} />
-                        </a>
-                    <AddGroup />    
+                        New Group <FontAwesomeIcon icon={faAdd} />
+                    </a>
+                    <AddGroup />
                 </div>
                 <div className="container p-2 rounded  mask-custom overflow-y-auto" style={{ height: "90%" }}>
                     <div className="card-body">
                         {chatList ?
-                            <ul className="list-unstyled mb-0 " >
-                                {chatList.map((chat) => {
-                                    return (
-                                        <li key={chat._id} className={selectedChat && selectedChat._id == chat._id ? "p-2 border-bottom active-contact" : "p-2 border-bottom contact-hover"} style={{ borderBottom: "1px solid rgba(255,255,255,.3) !important" }} onClick={() => {
-                                            setSelectedChat(chat);
-                                        }}>
-                                            <a className="d-flex justify-content-between link-light " style={{ textDecoration: "none" }}>
-                                                <div className="d-flex flex-row">
-                                                    <img src={!chat.isGroupChat ? getSender(user, chat.users).picture : "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp"} alt="avatar"
-                                                        className="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60" />
-                                                    <div className="pt-1">
-                                                        <p className="fw-bold mb-0">
-                                                            {!chat.isGroupChat
-                                                                ? getSender(user, chat.users).name
-                                                                : chat.chatname}
-                                                        </p>
-                                                        {chat.latestMessage && (
-                                                            <p className="small text-white">
-                                                                {chat.latestMessage.sender.name} : {chat.latestMessage.content.length > 50
-                                                                    ? chat.latestMessage.content.substring(0, 51) + "..."
-                                                                    : chat.latestMessage.content}
+                            chatList.length === 0 ? <div>Add members to Chat</div> :
+                                <ul className="list-unstyled mb-0 " >
+                                    {chatList.map((chat) => {
+                                        return (
+                                            <li key={chat._id} className={selectedChat && selectedChat._id == chat._id ? "p-2 border-bottom active-contact" : "p-2 border-bottom contact-hover"} style={{ borderBottom: "1px solid rgba(255,255,255,.3) !important" }} onClick={() => {
+                                                setSelectedChat(chat);
+                                            }}>
+                                                <a className="d-flex justify-content-between link-light " style={{ textDecoration: "none" }}>
+                                                    <div className="d-flex flex-row">
+                                                        <img src={!chat.isGroupChat ? getSender(user, chat.users).picture : "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp"} alt="avatar"
+                                                            className="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60" />
+                                                        <div className="pt-1">
+                                                            <p className="fw-bold mb-0">
+                                                                {!chat.isGroupChat
+                                                                    ? getSender(user, chat.users).name
+                                                                    : chat.chatname}
                                                             </p>
-                                                        )}
+                                                            {chat.latestMessage && (
+                                                                <p className="small text-white">
+                                                                    {chat.latestMessage.sender.name} : {chat.latestMessage.content.length > 50
+                                                                        ? chat.latestMessage.content.substring(0, 51) + "..."
+                                                                        : chat.latestMessage.content}
+                                                                </p>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="pt-1">
-                                                    {chat.latestMessage&&<p className="small text-white mb-1">{date(chat.latestMessage.createdAt)}</p>}
-                                                    {notification[chat._id]&&<span className="badge bg-danger rounded-pill float-end">{notification[chat._id]}</span>}
-                                                </div>
-                                            </a>
-                                        </li>)
-                                    console.log(chat)
-                                })}
-                            </ul>
+                                                    <div className="pt-1">
+                                                        {chat.latestMessage && <p className="small text-white mb-1">{date(chat.latestMessage.createdAt)}</p>}
+                                                        {notification[chat._id] && <span className="badge bg-danger rounded-pill float-end">{notification[chat._id]}</span>}
+                                                    </div>
+                                                </a>
+                                            </li>)
+                                        console.log(chat)
+                                    })}
+                                </ul>
                             :
                             <div>loading</div>}
 

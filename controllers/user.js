@@ -152,6 +152,7 @@ const getAllUser = async (req, res) => {
         ]
     } : {}
     const users = await User.find(keyword).find({ _id: { $ne: req.user.id } }).select("-password")
+    console.log(users)
     res.status(200).json(users);
 }
 module.exports = { register, login, getAllUser }
