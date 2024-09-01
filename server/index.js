@@ -15,8 +15,12 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleWare");
 const port=process.env.PORT
 
 const app=express();
-
-app.use(cors());
+const corsOptions ={
+    origin:'https://chit-chat-kappa-nine.vercel.app', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser())
 const connect=async()=>{

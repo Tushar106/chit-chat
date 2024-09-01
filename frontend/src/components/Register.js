@@ -88,7 +88,7 @@ function Register() {
             try {
                 setLoading(true)
                 const response=await axios.post("/api/user/register",body)
-                localStorage.setItem("user",JSON.stringify(response))
+                localStorage.setItem("user",JSON.stringify(response.data))
                 setLoading(false)
                 navigate("/chat")
             } catch (error) {
