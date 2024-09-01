@@ -1,34 +1,3 @@
-// import { createContext, useContext, useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// const ChatContext=createContext({});
-
-// const ChatProvider=({children})=>{
-//     const [user,setUser]=useState({})
-//     const navigate=useNavigate();
-//     useEffect(()=>{
-//         if(localStorage.getItem("user")){
-//             const userInfo =  JSON.parse(localStorage.getItem("user"));
-//             console.log(userInfo)
-//             setUser(userInfo);
-//         }
-//         else{
-//             navigate("/");
-//         }
-//     },[navigate])
-//     return(
-//         <ChatContext.Provider value={{user,setUser}}>
-//             {children}
-//         </ChatContext.Provider>
-//     )
-// }
-
-// export default ChatProvider;
-
-// export const ChatState = () => {
-//     return useContext(ChatContext);
-//   };
-
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -45,12 +14,11 @@ const ChatProvider = ({ children }) => {
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
-    // console.log(userInfo.data)
-    setUser(userInfo.data);
-
+    // console.log(userInfo)
     if (!userInfo) {
       navigate("/")
     }
+    setUser(userInfo);
   }, [navigate]);
 
   return (

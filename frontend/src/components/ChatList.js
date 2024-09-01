@@ -14,8 +14,7 @@ function ChatList({ fetchChat, setfetchChat }) {
     const { user, chatList, setChatList, selectedChat, setSelectedChat, notification, setNotification, } = ChatState();
     const [loading, setLoading] = useState(false)
     function getSender(loggein, users) {
-        console.log(loggein)
-        return users[0]._id == user._id ? users[1] : users[0]
+        return users[0]._id == loggein._id ? users[1] : users[0]
     }
 
     const date = (d) => {
@@ -39,7 +38,7 @@ function ChatList({ fetchChat, setfetchChat }) {
         const fetchData = async () => {
             try {
                 const { data } = await axios.get("/api/chat");
-                console.log(data)
+                // console.log(data)
                 await setChatList(data);
                 await setLoading(false)
             } catch (error) {
