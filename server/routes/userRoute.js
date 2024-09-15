@@ -6,8 +6,12 @@ const { verify } = require('../middleware/authMiddleWare');
 const router=express();
 
 router.post("/register",register)
-router.post("/login",login)
+// router.post("/login",login)
 router.get("/",verify,getAllUser)
+router.post("/login",(req,res)=>{
+    res.send("working")
+})
+
 
 
 module.exports=router;
