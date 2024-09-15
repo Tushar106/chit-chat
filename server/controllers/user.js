@@ -140,7 +140,10 @@ const login = asyncHandler(async (req, res) => {
     }
     var token = jwt.sign({ id: userExist._id }, process.env.JWT);
     res.status(200).cookie("access_token", token, {
-        httpOnly: true
+        magAge: 60 * 60 * 1000,
+        sameSite: 'None',
+        secure: true,
+        domain: 'https://66e72ea20165a8389f9faca0--bejewelled-manatee-24e19b.netlify.app'
     }).json(userExist)
 })
 // /api/user?search=tushar
