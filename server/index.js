@@ -16,11 +16,12 @@ const port = process.env.PORT
 
 const app = express();
 const corsOptions = {
-    origin: 'https://chit-chat-kappa-nine.vercel.app',
+    origin: 'https://66e72ea20165a8389f9faca0--bejewelled-manatee-24e19b.netlify.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser())
 const connect = async () => {
