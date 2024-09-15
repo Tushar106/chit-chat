@@ -39,7 +39,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
         if (!selectedChat) return;
         setLoading(true)
         try {
-            const { data } = await axios.get(`/api/message/${selectedChat._id}`);
+            const { data } = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/message/${selectedChat._id}`);
             setMessages(data);
             setLoading(false);
             socket.emit("join chat", selectedChat._id)
@@ -52,7 +52,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
     const sendMessage = async () => {
         try {
             setMessageText("");
-            const { data } = await axios.post("/api/message", {
+            const { data } = await axios.post("https://chit-chat-server-7lyn.onrender.com/api/message", {
                 content: messageText,
                 chatId: selectedChat._id
             })

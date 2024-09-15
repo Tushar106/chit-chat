@@ -7,7 +7,7 @@ import AddGroup from "./AddGroup";
 import io from "socket.io-client";
 
 var socket;
-const ENDURL = "http://localhost:8800"
+const ENDURL = "https://chit-chat-server-7lyn.onrender.com"
 function ChatList({ fetchChat, setfetchChat }) {
     const [socketConnected, setSocketConnected] = useState(false);
 
@@ -37,7 +37,7 @@ function ChatList({ fetchChat, setfetchChat }) {
         setLoading(true)
         const fetchData = async () => {
             try {
-                const { data } = await axios.get("/api/chat");
+                const { data } = await axios.get("https://chit-chat-server-7lyn.onrender.com/api/chat");
                 // console.log(data)
                 await setChatList(data);
                 await setLoading(false)

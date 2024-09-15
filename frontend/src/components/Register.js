@@ -87,7 +87,7 @@ function Register() {
             }
             try {
                 setLoading(true)
-                const response=await axios.post("/api/user/register",body)
+                const response=await axios.post("https://chit-chat-server-7lyn.onrender.com/api/user/register",body)
                 localStorage.setItem("user",JSON.stringify(response.data))
                 setLoading(false)
                 navigate("/chat")

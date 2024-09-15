@@ -22,7 +22,7 @@ function ViewChat({fetchChat,setfetchChat}) {
         setLoading(true);
         const data = async () => {
             try {
-                const res = await axios.get(`/api/user?search=${search}`)
+                const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`)
                 await setResult([...res?.data])
                 setLoading(false);
             } catch (error) {
@@ -34,7 +34,7 @@ function ViewChat({fetchChat,setfetchChat}) {
     const renameGroup = async () => {
         setUpdateLoading(true);
         try {
-            const { data } = await axios.put("/api/chat/rename", {
+            const { data } = await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/rename", {
                 newName: groupName,
                 chatId: selectedChat._id
             })
@@ -55,7 +55,7 @@ function ViewChat({fetchChat,setfetchChat}) {
                 setChatLoading(false)
                 return
             }   
-            const { data } = await axios.put("/api/chat/update", {
+            const { data } = await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/update", {
                 chatId: selectedChat._id,
                 users: selectedUser.map((e) => { return e._id })
             })
@@ -69,7 +69,7 @@ function ViewChat({fetchChat,setfetchChat}) {
     const removeSelf=async()=>{
         setChatLoading(true);
         try {
-            const {data}=await axios.put("/api/chat/groupremove",{
+            const {data}=await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/groupremove",{
                 userId:user._id, 
                 chatId:selectedChat._id
             })

@@ -21,7 +21,7 @@ function AddGroup() {
     setLoading(true);
     const data = async () => {
       try {
-        const res = await axios.get(`/api/user?search=${search}`)
+        const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`)
         await setResult(res.data.filter(f => !selectedUser.includes(f)))
         setLoading(false);
       } catch (error) {
