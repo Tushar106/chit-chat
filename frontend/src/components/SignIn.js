@@ -47,6 +47,7 @@ function SignIn(){
                 setLoading(true)
                 const response=await axios.post("https://chit-chat-server-7y4zp2xxs-tushar106s-projects.vercel.app/api/user/login",body,{
                     headers:{
+                        Accept: "application/json",
                         "Content-Type": "application/json"
                     }
                 })
