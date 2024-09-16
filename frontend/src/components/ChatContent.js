@@ -115,6 +115,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
             setUserTyping("");
             setIsTyping(false)
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     useEffect(() => {
         const handleWindowResize = () => setWidth(window.innerWidth);
@@ -188,7 +189,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                         <ScrollableFeed className="pt-3 pe-3 custom-scroll" ref={divRef} >
                             {!loading ? messages.map((message, index) => {
                                 return (<>
-                                    {message.sender._id != user._id
+                                    {message.sender._id !== user._id
                                         ?
                                         <div className="d-flex flex-row justify-content-start" key={message._id}>
                                             <img src={message.sender.picture}

@@ -12,10 +12,12 @@ function ChatNavbar() {
         // <div className="container">
         <nav className="navbar bg-body-tertiary">
             <div className="container-fluid">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="btn btn-outline-success" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
                     <FontAwesomeIcon icon={faSearch} /> Search
                 </a>
                 <SideBar />
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="navbar-brand" href="#">Chit-Chat</a>
                 <div className="d-flex" style={{alignItems:"center"}}> 
                   <FontAwesomeIcon icon={faBell} size={"xl"} style={{marginRight:"10px"}}/>

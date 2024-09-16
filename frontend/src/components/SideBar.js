@@ -17,7 +17,7 @@ function SideBar() {
     const btnElement = React.useRef()
     useEffect(() => {
         setOpen(true);
-    })
+    },[])
     const {
         setSelectedChat,
         chatList,
@@ -77,6 +77,7 @@ function SideBar() {
                                 {result.map((item, index) => {
                                     return (
                                         <li className="p-2 border-bottom custom-scroll contact-hover" key={item._id}>
+                                            {/*  eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
                                             <a className="d-flex justify-content-between" style={{ textDecoration: "none" }} onClick={() => {
                                                 accessChat(item._id)
                                             }} >

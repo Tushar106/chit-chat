@@ -89,6 +89,7 @@ function ChatList({ fetchChat, setfetchChat }) {
             <div className="col-lg-3 p-2 h-100 " >
                 <div className="d-flex justify-content-between " style={{ height: "10%", alignItems: "center" }}>
                     <div><h5 className="font-weight-bold text-center m-0 text-white" >Member</h5></div>
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <a className="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="#offcanvasExample" role="button" >
                         New Group <FontAwesomeIcon icon={faAdd} />
                     </a>
@@ -104,6 +105,7 @@ function ChatList({ fetchChat, setfetchChat }) {
                                             <li key={chat._id} className={selectedChat && selectedChat._id === chat._id ? "p-2 border-bottom active-contact" : "p-2 border-bottom contact-hover"} style={{ borderBottom: "1px solid rgba(255,255,255,.3) !important" }} onClick={() => {
                                                 setSelectedChat(chat);
                                             }}>
+                                                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                                                 <a className="d-flex justify-content-between link-light " style={{ textDecoration: "none" }}>
                                                     <div className="d-flex flex-row">
                                                         <img src={!chat.isGroupChat ? getSender(user, chat.users).picture : "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp"} alt="avatar"
@@ -129,7 +131,6 @@ function ChatList({ fetchChat, setfetchChat }) {
                                                     </div>
                                                 </a>
                                             </li>)
-                                        console.log(chat)
                                     })}
                                 </ul>
                             :

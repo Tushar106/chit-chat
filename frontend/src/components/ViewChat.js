@@ -151,6 +151,7 @@ function ViewChat({fetchChat,setfetchChat}) {
                                                 }).map((item, index) => {
                                                     return (
                                                         <li className="p-2 border-bottom custom-scroll contact-hover" key={item._id}>
+                                                            {/*  eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                                                             <a className="d-flex justify-content-between" style={{ textDecoration: "none" }} onClick={() => {
                                                                 setSelectedUser([...selectedUser, item])
                                                             }}>
