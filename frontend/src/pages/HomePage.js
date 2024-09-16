@@ -19,7 +19,7 @@ function HomePage() {
     },[])
     return (
         <section className="w-100">
-            <div className="container-fluid" style={{ height: "89.5%" }}>
+            <div className="container-fluid" style={{ minHeight: "89.5%" }}>
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col-md-9 col-lg-6 col-xl-5">
                         <HomeSvg />
