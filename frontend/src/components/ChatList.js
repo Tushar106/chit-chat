@@ -39,7 +39,7 @@ function ChatList({ fetchChat, setfetchChat }) {
         const fetchData = async () => {
             try {
                 const { data } = await axios.get("https://chit-chat-server-7lyn.onrender.com/api/chat",{
-                    withCredentials:true,
+                    // withCredentials:true,
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json"
