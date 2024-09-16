@@ -13,6 +13,7 @@ function ChatList({ fetchChat, setfetchChat }) {
     const [socketConnected, setSocketConnected] = useState(false);
 
     const { user, chatList, setChatList, selectedChat, setSelectedChat, notification, setNotification, } = ChatState();
+    // eslint-disable-next-line no-unused-vars
     const [loading, setLoading] = useState(false)
     function getSender(loggein, users) {
         return users[0]._id === loggein._id ? users[1] : users[0]
@@ -80,13 +81,6 @@ function ChatList({ fetchChat, setfetchChat }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     })
 
-    if(loading){
-        return(
-            <div>
-                loading
-            </div>
-        )
-    }
 
 
     return (
