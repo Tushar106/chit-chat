@@ -19,9 +19,9 @@ function ChatContent({ fetchChat, setfetchChat }) {
     const [loading, setLoading] = useState(false);
     const [typing, setTyping] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
-    const [userTyping,setUserTyping]=useState("");
+    const [userTyping, setUserTyping] = useState("");
 
-    const { selectedChat, user, setSelectedChat,notification, setNotification } = ChatState();
+    const { selectedChat, user, setSelectedChat, notification, setNotification } = ChatState();
     function getSender(loggein, users) {
         return users[0]._id === loggein._id ? users[1] : users[0]
     }
@@ -39,8 +39,8 @@ function ChatContent({ fetchChat, setfetchChat }) {
         if (!selectedChat) return;
         setLoading(true)
         try {
-            const { data } = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/message/${selectedChat._id}`,{
-                withCredentials:true,
+            const { data } = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/message/${selectedChat._id}`, {
+                withCredentials: true,
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json"
@@ -61,9 +61,10 @@ function ChatContent({ fetchChat, setfetchChat }) {
             const { data } = await axios.post("https://chit-chat-server-7lyn.onrender.com/api/message", {
                 content: messageText,
                 chatId: selectedChat._id
-            },{
-                withCredentials:true,
+            }, {
+                withCredentials: true,
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 }
@@ -82,7 +83,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
 
         if (!typing) {
             setTyping(true);
-            socket.emit("typing", selectedChat._id,user);
+            socket.emit("typing", selectedChat._id, user);
         }
         let lastTypingTime = new Date().getTime();
         var timerLength = 3000;
@@ -145,12 +146,12 @@ function ChatContent({ fetchChat, setfetchChat }) {
         // Create a copy of the current state
         const newState = { ...notification };
         // console.log(notification[id])
-    
+
         // Omit the key you want to remove
-        delete newState[id] ;
-       
+        delete newState[id];
+
         setNotification(newState);
-      };
+    };
 
     useEffect(() => {
         socket.on("message recieved", (newMessageRecieved) => {
@@ -183,7 +184,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                                 <img src={!selectedChat.isGroupChat
                                     ? getSender(user, selectedChat.users).picture
                                     : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"}
-                                    alt="avatar 1" style={{ width: "45px", marginRight: "20px", borderRadius:"100%" }} />
+                                    alt="avatar 1" style={{ width: "45px", marginRight: "20px", borderRadius: "100%" }} />
 
                                 <h5 className="mb-0 text-truncate" style={{ maxWidth: "150px" }}>
                                     {!selectedChat.isGroupChat
@@ -205,8 +206,8 @@ function ChatContent({ fetchChat, setfetchChat }) {
                                         ?
                                         <div className="d-flex flex-row justify-content-start" key={message._id}>
                                             <img src={message.sender.picture}
-                                                alt="avatar 1" style={{ width: "45px", height: "100%",borderRadius:"100%" }} />
-                                            <div style={{ padding:"15px" }}>
+                                                alt="avatar 1" style={{ width: "45px", height: "100%", borderRadius: "100%" }} />
+                                            <div style={{ padding: "15px" }}>
                                                 <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
                                                     {message.content}.</p>
                                                 <p className="small ms-3 mb-3 rounded-3 text-muted float-end">{date(message.createdAt
@@ -214,7 +215,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                                             </div>
                                         </div> :
                                         <div className="d-flex flex-row justify-content-end" key={message._id}>
-                                            <div style={{ padding:"15px"}}>
+                                            <div style={{ padding: "15px" }}>
                                                 <p className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
                                                     {message.content}
                                                 </p>
@@ -227,7 +228,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                                 </>)
                             }) : <div>loading</div>}
                         </ScrollableFeed>
-                        {isTyping?<div className="" style={{height:"2%",marginBottom:"5px"}}>{userTyping} is typing...</div>:<div></div>}
+                        {isTyping ? <div className="" style={{ height: "2%", marginBottom: "5px" }}>{userTyping} is typing...</div> : <div></div>}
                         <div className="text-muted d-flex justify-content-start align-items-center p-2" style={{ height: "15%" }}>
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
                                 alt="avatar 3" style={{ width: "40px", marginRight: "10px" }} />

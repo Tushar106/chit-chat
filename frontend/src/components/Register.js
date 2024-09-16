@@ -89,10 +89,11 @@ function Register() {
                 setLoading(true)
                 const response=await axios.post("https://chit-chat-server-7lyn.onrender.com/api/user/register",body,{
                     withCredentials:true,
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "application/json"
-                        }
+                    headers: {
+                      'Access-Control-Allow-Origin': '*',
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    }
                 })
                 localStorage.setItem("user",JSON.stringify(response.data))
                 setLoading(false)

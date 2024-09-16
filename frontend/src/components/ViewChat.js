@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faTimes } from "@fortawesome/free-solid-svg-icons"
+import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import axios from "axios";
 import ErrorToast from "./ErrorToast";
 
 
-function ViewChat({fetchChat,setfetchChat}) {
-    const { selectedChat, user, setSelectedChat,chatList,setChatList } = ChatState();
+function ViewChat({ fetchChat, setfetchChat }) {
+    const { selectedChat, user, setSelectedChat, chatList, setChatList } = ChatState();
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
     const [selectedUser, setSelectedUser] = useState([]);
-  const [chatLoading, setChatLoading] = useState(false);
+    const [chatLoading, setChatLoading] = useState(false);
     const [groupName, setGroupName] = useState("");
     const [loading, setLoading] = useState(false);
     const [updateLoading, setUpdateLoading] = useState(false);
     const [error, setError] = useState();
-  const [open, setopen] = useState(false);
+    const [open, setopen] = useState(false);
 
     function submitSearch() {
         setLoading(true);
         const data = async () => {
             try {
-                const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`)
+                const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`.{
+                    withCredentials:true,
+                    headers: {
+                      'Access-Control-Allow-Origin': '*',
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    }
+                })
                 await setResult([...res?.data])
                 setLoading(false);
             } catch (error) {
@@ -37,6 +44,13 @@ function ViewChat({fetchChat,setfetchChat}) {
             const { data } = await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/rename", {
                 newName: groupName,
                 chatId: selectedChat._id
+            },{
+                withCredentials:true,
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
             })
             setSelectedChat(data);
             setUpdateLoading(false);
@@ -49,15 +63,22 @@ function ViewChat({fetchChat,setfetchChat}) {
     const saveChanges = async () => {
         setChatLoading(true);
         try {
-            if (selectedUser.length<=2 ) {
+            if (selectedUser.length <= 2) {
                 setError("Enter Group Members")
                 setopen(true)
                 setChatLoading(false)
                 return
-            }   
+            }
             const { data } = await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/update", {
                 chatId: selectedChat._id,
                 users: selectedUser.map((e) => { return e._id })
+            },{
+                withCredentials:true,
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
             })
             setSelectedChat(data)
             setChatLoading(false);
@@ -66,22 +87,23 @@ function ViewChat({fetchChat,setfetchChat}) {
             console.log(error)
         }
     }
-    const removeSelf=async()=>{
+    const removeSelf = async () => {
         setChatLoading(true);
         try {
             // eslint-disable-next-line no-unused-vars
-            const {data}=await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/groupremove",{
-                userId:user._id, 
-                chatId:selectedChat._id
-            },{
-                withCredentials:true,
+            const { data } = await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/groupremove", {
+                userId: user._id,
+                chatId: selectedChat._id
+            }, {
+                withCredentials: true,
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 }
             })
-            await setChatList(chatList.filter((i)=>{
-                return chatList._id!==selectedChat._id
+            await setChatList(chatList.filter((i) => {
+                return chatList._id !== selectedChat._id
             }))
             await setChatLoading(false);
             await setSelectedChat();
@@ -116,12 +138,12 @@ function ViewChat({fetchChat,setfetchChat}) {
                             <div className="" >
                                 {selectedUser.length > 0 &&
                                     <ul className="d-flex list-unstyled overflow-x-auto custom-scroll" style={{ width: "100%", height: "73px", alignItems: "center" }}>
-                                        {selectedUser.filter((i)=>{return i._id!==user._id}).map(item => {
+                                        {selectedUser.filter((i) => { return i._id !== user._id }).map(item => {
                                             return (
                                                 <li className="m-1" key={item._id}>
                                                     <button type="button" className="btn btn-primary position-relative p-1">
                                                         {item.name}
-                                                        {selectedChat.groupAdmin._id===user._id &&<span className="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{ left: "94%" }} onClick={() => {
+                                                        {selectedChat.groupAdmin._id === user._id && <span className="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{ left: "94%" }} onClick={() => {
                                                             setSelectedUser(selectedUser.filter((e) => e._id !== item._id))
                                                         }}>
                                                             <FontAwesomeIcon icon={faTimes} />
@@ -178,13 +200,13 @@ function ViewChat({fetchChat,setfetchChat}) {
                                     </ul> : <div>loading</div>}
                             </div>
                         </div>
-                       {!chatLoading? <div className="modal-footer">
-                            <button type="button" className="btn btn-danger"  onClick={removeSelf}>Leave</button>
+                        {!chatLoading ? <div className="modal-footer">
+                            <button type="button" className="btn btn-danger" onClick={removeSelf}>Leave</button>
                             <button type="button" className="btn btn-primary" onClick={saveChanges}>Save changes</button>
-                        </div>:<div>loading</div>}
+                        </div> : <div>loading</div>}
                     </div>
                 </div>}
-                {open && <ErrorToast data={error} setopen={setopen} />}
+            {open && <ErrorToast data={error} setopen={setopen} />}
         </div>
     )
 }

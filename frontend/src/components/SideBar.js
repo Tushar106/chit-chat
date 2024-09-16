@@ -30,10 +30,11 @@ function SideBar() {
             try {
                 const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`,{
                     withCredentials:true,
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                }
+                    headers: {
+                      'Access-Control-Allow-Origin': '*',
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    }
                 })
                 await setResult([...res?.data])
                 setLoading(false);
@@ -49,6 +50,7 @@ function SideBar() {
             const { data } = await axios.post(`https://chit-chat-server-7lyn.onrender.com/api/chat`, { userId },{
                 withCredentials:true,
                 headers: {
+                  'Access-Control-Allow-Origin': '*',
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 }
