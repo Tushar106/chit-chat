@@ -15,6 +15,7 @@ function HomePage() {
         if(userInfo){
             navigate("/chat");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     return (
         <section className="w-100">

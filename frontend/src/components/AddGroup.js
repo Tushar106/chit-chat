@@ -117,7 +117,7 @@ function AddGroup() {
                         }).map((item, index) => {
                           return (
                             <li className="p-2 border-bottom custom-scroll contact-hover" key={item._id}>
-                              <a className="d-flex justify-content-between" style={{ textDecoration: "none" }} onClick={() => {
+                              <div className="d-flex justify-content-between" style={{ textDecoration: "none" }} onClick={() => {
 
                                 setSelectedUser([...selectedUser, item])
                               }}>
@@ -129,7 +129,7 @@ function AddGroup() {
                                     <p className="small text-muted">{item.email}</p>
                                   </div>
                                 </div>
-                              </a>
+                              </div>
                             </li>
                           )
                         })}</>

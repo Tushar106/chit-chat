@@ -57,6 +57,7 @@ function ChatList({ fetchChat, setfetchChat }) {
         socket.on('connected', () => {
             setSocketConnected(true)
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -71,6 +72,7 @@ function ChatList({ fetchChat, setfetchChat }) {
                 });
             }
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     })
 
     if(loading){

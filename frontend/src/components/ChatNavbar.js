@@ -12,7 +12,7 @@ function ChatNavbar() {
         // <div className="container">
         <nav className="navbar bg-body-tertiary">
             <div className="container-fluid">
-                <a className="btn btn-outline-success" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <a className="btn btn-outline-success" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" >
                     <FontAwesomeIcon icon={faSearch} /> Search
                 </a>
                 <SideBar />
