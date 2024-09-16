@@ -16,12 +16,12 @@ const port = process.env.PORT
 
 const app = express();
 const corsOptions = {
-    origin: 'https://66e821e323e32320b6880f18--bejewelled-manatee-24e19b.netlify.app/',
+    origin: 'https://main--chat-easy.netlify.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser())
 const connect = async () => {
@@ -81,7 +81,7 @@ const server = app.listen(port, () => {
 const io = require("socket.io")(server, {
     pingTimeout: 60000,
     cors: {
-        origin: "https://66e821e323e32320b6880f18--bejewelled-manatee-24e19b.netlify.app",
+        origin: "https://main--chat-easy.netlify.app",
     }
 })
 io.on("connection", (socket) => {
