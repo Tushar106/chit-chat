@@ -49,6 +49,7 @@ function ChatList({ fetchChat, setfetchChat }) {
             }
         }
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetchChat])
 
     useEffect(() => {
