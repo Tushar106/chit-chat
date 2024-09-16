@@ -72,6 +72,13 @@ function ChatList({ fetchChat, setfetchChat }) {
         })
     })
 
+    if(loading){
+        return(
+            <div>
+                loading
+            </div>
+        )
+    }
 
 
     return (
@@ -91,7 +98,7 @@ function ChatList({ fetchChat, setfetchChat }) {
                                 <ul className="list-unstyled mb-0 " >
                                     {chatList.map((chat) => {
                                         return (
-                                            <li key={chat._id} className={selectedChat && selectedChat._id == chat._id ? "p-2 border-bottom active-contact" : "p-2 border-bottom contact-hover"} style={{ borderBottom: "1px solid rgba(255,255,255,.3) !important" }} onClick={() => {
+                                            <li key={chat._id} className={selectedChat && selectedChat._id === chat._id ? "p-2 border-bottom active-contact" : "p-2 border-bottom contact-hover"} style={{ borderBottom: "1px solid rgba(255,255,255,.3) !important" }} onClick={() => {
                                                 setSelectedChat(chat);
                                             }}>
                                                 <a className="d-flex justify-content-between link-light " style={{ textDecoration: "none" }}>

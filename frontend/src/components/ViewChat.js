@@ -69,6 +69,7 @@ function ViewChat({fetchChat,setfetchChat}) {
     const removeSelf=async()=>{
         setChatLoading(true);
         try {
+            // eslint-disable-next-line no-unused-vars
             const {data}=await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/groupremove",{
                 userId:user._id, 
                 chatId:selectedChat._id
@@ -114,7 +115,7 @@ function ViewChat({fetchChat,setfetchChat}) {
                                                 <li className="m-1" key={item._id}>
                                                     <button type="button" className="btn btn-primary position-relative p-1">
                                                         {item.name}
-                                                        {selectedChat.groupAdmin._id==user._id &&<span className="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{ left: "94%" }} onClick={() => {
+                                                        {selectedChat.groupAdmin._id===user._id &&<span className="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{ left: "94%" }} onClick={() => {
                                                             setSelectedUser(selectedUser.filter((e) => e._id != item._id))
                                                         }}>
                                                             <FontAwesomeIcon icon={faTimes} />

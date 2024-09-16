@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-
-
 import { faAdd, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons"
 import { ChatState } from "../Context/ChatProvider";
 import ErrorToast from "./ErrorToast";
@@ -97,7 +95,7 @@ function AddGroup() {
                           <button type="button" className="btn btn-primary position-relative p-1">
                             {item.name}
                             <span className="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{ left: "94%" }} onClick={() => {
-                              setSelectedUser(selectedUser.filter((e) => e._id != item._id))
+                              setSelectedUser(selectedUser.filter((e) => e._id !== item._id))
                             }}>
                               <FontAwesomeIcon icon={faTimes} />
                               <span className="visually-hidden">Remove</span>

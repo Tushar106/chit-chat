@@ -23,7 +23,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
 
     const { selectedChat, user, setSelectedChat,notification, setNotification } = ChatState();
     function getSender(loggein, users) {
-        return users[0]._id == loggein._id ? users[1] : users[0]
+        return users[0]._id === loggein._id ? users[1] : users[0]
     }
 
     const scrollToBottom = () => {
@@ -120,7 +120,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
         const handleWindowResize = () => setWidth(window.innerWidth);
         window.addEventListener("resize", handleWindowResize);
         fetchMessage();
-        // scrollToBottom();
+        scrollToBottom();
         updateStateWithoutKey(selectedChat._id)
         selectedChatCompare = selectedChat;
         return () => window.removeEventListener("resize", handleWindowResize);
@@ -185,7 +185,7 @@ function ChatContent({ fetchChat, setfetchChat }) {
                         <ScrollableFeed className="pt-3 pe-3 custom-scroll" ref={divRef} >
                             {!loading ? messages.map((message, index) => {
                                 return (<>
-                                    {message.sender._id != user._id
+                                    {message.sender._id !== user._id
                                         ?
                                         <div className="d-flex flex-row justify-content-start" key={message._id}>
                                             <img src={message.sender.picture}

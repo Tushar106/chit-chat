@@ -6,6 +6,7 @@ import SignIn from "../components/SignIn";
 import Register from "../components/Register";
 function HomePage() {
     const [tab,setTab]=useState(0);
+    // eslint-disable-next-line no-unused-vars
     const [user,setUser]=useState()
     const navigate=useNavigate();
     useEffect(()=>{
