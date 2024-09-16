@@ -22,7 +22,7 @@ function ViewChat({ fetchChat, setfetchChat }) {
         setLoading(true);
         const data = async () => {
             try {
-                const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`.{
+                const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`,{
                     withCredentials:true,
                     headers: {
                       'Access-Control-Allow-Origin': '*',
