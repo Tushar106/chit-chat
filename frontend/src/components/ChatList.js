@@ -41,7 +41,6 @@ function ChatList({ fetchChat, setfetchChat }) {
                 const { data } = await axios.get("https://chit-chat-server-7lyn.onrender.com/api/chat",{
                     withCredentials:true,
                     headers: {
-                        'Access-Control-Allow-Origin': '*',
                         Accept: "application/json",
                         "Content-Type": "application/json"
                     }
