@@ -9,12 +9,13 @@ import io from "socket.io-client";
 var socket;
 const ENDURL = "https://chit-chat-server-7lyn.onrender.com"
 function ChatList({ fetchChat, setfetchChat }) {
+    // eslint-disable-next-line no-unused-vars
     const [socketConnected, setSocketConnected] = useState(false);
 
     const { user, chatList, setChatList, selectedChat, setSelectedChat, notification, setNotification, } = ChatState();
     const [loading, setLoading] = useState(false)
     function getSender(loggein, users) {
-        return users[0]._id == loggein._id ? users[1] : users[0]
+        return users[0]._id === loggein._id ? users[1] : users[0]
     }
 
     const date = (d) => {

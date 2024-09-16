@@ -75,7 +75,7 @@ function ViewChat({fetchChat,setfetchChat}) {
                 chatId:selectedChat._id
             })
             await setChatList(chatList.filter((i)=>{
-                return chatList._id!=selectedChat._id
+                return chatList._id!==selectedChat._id
             }))
             await setChatLoading(false);
             await setSelectedChat();
@@ -110,13 +110,13 @@ function ViewChat({fetchChat,setfetchChat}) {
                             <div className="" >
                                 {selectedUser.length > 0 &&
                                     <ul className="d-flex list-unstyled overflow-x-auto custom-scroll" style={{ width: "100%", height: "73px", alignItems: "center" }}>
-                                        {selectedUser.filter((i)=>{return i._id!=user._id}).map(item => {
+                                        {selectedUser.filter((i)=>{return i._id!==user._id}).map(item => {
                                             return (
                                                 <li className="m-1" key={item._id}>
                                                     <button type="button" className="btn btn-primary position-relative p-1">
                                                         {item.name}
                                                         {selectedChat.groupAdmin._id===user._id &&<span className="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{ left: "94%" }} onClick={() => {
-                                                            setSelectedUser(selectedUser.filter((e) => e._id != item._id))
+                                                            setSelectedUser(selectedUser.filter((e) => e._id !== item._id))
                                                         }}>
                                                             <FontAwesomeIcon icon={faTimes} />
                                                             <span className="visually-hidden">Remove</span>
