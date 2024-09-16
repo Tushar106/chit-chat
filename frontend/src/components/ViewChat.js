@@ -73,6 +73,12 @@ function ViewChat({fetchChat,setfetchChat}) {
             const {data}=await axios.put("https://chit-chat-server-7lyn.onrender.com/api/chat/groupremove",{
                 userId:user._id, 
                 chatId:selectedChat._id
+            },{
+                withCredentials:true,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
             })
             await setChatList(chatList.filter((i)=>{
                 return chatList._id!==selectedChat._id

@@ -28,7 +28,13 @@ function SideBar() {
         setLoading(true);
         const data = async () => {
             try {
-                const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`)
+                const res = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/user?search=${search}`,{
+                    withCredentials:true,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+                })
                 await setResult([...res?.data])
                 setLoading(false);
             } catch (error) {
@@ -40,7 +46,13 @@ function SideBar() {
     const accessChat = async (userId) => {
         try {
             setChatLoading(true);
-            const { data } = await axios.post(`https://chit-chat-server-7lyn.onrender.com/api/chat`, { userId });
+            const { data } = await axios.post(`https://chit-chat-server-7lyn.onrender.com/api/chat`, { userId },{
+                withCredentials:true,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            });
             if (!chatList.find((c) => c._id === data._id)) setChatList([data, ...chatList]);
             setSelectedChat(data);
             setChatLoading(false);

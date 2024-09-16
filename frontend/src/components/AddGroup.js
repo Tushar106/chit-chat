@@ -41,9 +41,15 @@ function AddGroup() {
         setopen(true)
         return
       }
-      const { data } = await axios.post("/api/chat/group", {
+      const { data } = await axios.post("https://chit-chat-server-7lyn.onrender.com/api/chat/group", {
         name: groupName,
         users: selectedUser.map((e) => { return e._id })
+      },{
+        withCredentials:true,
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        }
       })
       setChatList([data, ...chatList])
       setSelectedChat(data)

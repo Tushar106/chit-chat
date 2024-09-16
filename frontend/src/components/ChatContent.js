@@ -9,7 +9,7 @@ import ScrollableFeed from 'react-scrollable-feed'
 import io from "socket.io-client";
 
 var socket, selectedChatCompare;
-const ENDURL = "http://localhost:8800"
+const ENDURL = "https://chit-chat-server-7lyn.onrender.com"
 function ChatContent({ fetchChat, setfetchChat }) {
 
     const [socketConnected, setSocketConnected] = useState(false);
@@ -39,7 +39,13 @@ function ChatContent({ fetchChat, setfetchChat }) {
         if (!selectedChat) return;
         setLoading(true)
         try {
-            const { data } = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/message/${selectedChat._id}`);
+            const { data } = await axios.get(`https://chit-chat-server-7lyn.onrender.com/api/message/${selectedChat._id}`,{
+                withCredentials:true,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            });
             setMessages(data);
             setLoading(false);
             socket.emit("join chat", selectedChat._id)
@@ -55,6 +61,12 @@ function ChatContent({ fetchChat, setfetchChat }) {
             const { data } = await axios.post("https://chit-chat-server-7lyn.onrender.com/api/message", {
                 content: messageText,
                 chatId: selectedChat._id
+            },{
+                withCredentials:true,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
             })
             setfetchChat(!fetchChat)
             socket.emit("new message", data)
