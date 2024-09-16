@@ -4,6 +4,7 @@ const jwt=require("jsonwebtoken")
 
 const verify=expressAsyncHandler(async(req,res,next)=>{
     const token=req.cookies.access_token;
+    console.log(token)
     if(!token){
         res.status(400)
         throw new Error("Token is not present")
