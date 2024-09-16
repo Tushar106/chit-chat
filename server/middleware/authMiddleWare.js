@@ -9,7 +9,7 @@ const verify=expressAsyncHandler(async(req,res,next)=>{
         res.status(400)
         throw new Error("Token is not present")
     }
-    jwt.verify(token,process.env.Jwt,(err,user)=>{
+    jwt.verify(token,process.env.JWT,(err,user)=>{
     if(err) 
     throw new Error("Token Error")
     req.user=user  //koi random property user me user bhej diya
