@@ -16,7 +16,7 @@ const port = process.env.PORT
 
 const app = express();
 const corsOptions = {
-    origin: 'https://main--chat-easy.netlify.app',
+    origin: 'https://chat-easy.netlify.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
@@ -81,7 +81,7 @@ const server = app.listen(port, () => {
 const io = require("socket.io")(server, {
     pingTimeout: 60000,
     cors: {
-        origin: "https://main--chat-easy.netlify.app",
+        origin: "https://chat-easy.netlify.app",
     }
 })
 io.on("connection", (socket) => {
