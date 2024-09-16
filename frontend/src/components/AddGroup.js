@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
 
-import { faAdd, faCancel, faCross, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons"
+import { faAdd, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons"
 import { ChatState } from "../Context/ChatProvider";
 import ErrorToast from "./ErrorToast";
 function AddGroup() {
@@ -16,7 +16,7 @@ function AddGroup() {
   const [selectedUser, setSelectedUser] = useState([]);
   const [error, setError] = useState();
   const [open, setopen] = useState(false);
-  const { user, chatList, setChatList, setSelectedChat } = ChatState();
+  const {  chatList, setChatList, setSelectedChat } = ChatState();
   function submitSearch() {
     setLoading(true);
     const data = async () => {

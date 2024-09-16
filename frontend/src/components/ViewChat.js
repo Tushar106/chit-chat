@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons"
+import {  faTimes } from "@fortawesome/free-solid-svg-icons"
 import axios from "axios";
 import ErrorToast from "./ErrorToast";
 

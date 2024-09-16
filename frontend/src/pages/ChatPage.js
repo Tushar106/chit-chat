@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { ChatState } from "../Context/ChatProvider";
 import ChatNavbar from "../components/ChatNavbar";

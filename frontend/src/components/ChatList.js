@@ -37,7 +37,9 @@ function ChatList({ fetchChat, setfetchChat }) {
         setLoading(true)
         const fetchData = async () => {
             try {
-                const { data } = await axios.get("https://chit-chat-server-7lyn.onrender.com/api/chat");
+                const { data } = await axios.get("https://chit-chat-server-7lyn.onrender.com/api/chat",{
+                    withCredentials:true
+                });
                 // console.log(data)
                 await setChatList(data);
                 await setLoading(false)
