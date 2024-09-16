@@ -16,7 +16,7 @@ const port = process.env.PORT
 
 const app = express();
 const corsOptions = {
-    origin: 'https://chat-easy.netlify.app',
+    origin: ['https://chat-easy.netlify.app', 'https://main--chat-easy.netlify.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
@@ -43,14 +43,14 @@ mongoose.connection.on("connected", () => {
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.header('Access-Control-Allow-Origin', 'https://chat-easy.netlify.app');
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Max-Age", "1800");
     res.setHeader("Access-Control-Allow-Headers", "content-type");
     res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
     res.send("Hello world")
 })
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*")
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Max-Age", "1800");
@@ -81,7 +81,7 @@ const server = app.listen(port, () => {
 const io = require("socket.io")(server, {
     pingTimeout: 60000,
     cors: {
-        origin: "https://chat-easy.netlify.app",
+        origin: ["https://chat-easy.netlify.app", 'https://main--chat-easy.netlify.app'],
     }
 })
 io.on("connection", (socket) => {
