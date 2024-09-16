@@ -15,7 +15,7 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleWare");
 const port = process.env.PORT
 
 const app = express();
-https://66e821e323e32320b6880f18--bejewelled-manatee-24e19b.netlify.app/
+
 const corsOptions = {
     origin: 'https://66e821e323e32320b6880f18--bejewelled-manatee-24e19b.netlify.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
